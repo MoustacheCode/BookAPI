@@ -1,5 +1,6 @@
 package org.example.bookapi.clients;
 
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.example.bookapi.config.EnvironmentManager;
 import org.springframework.stereotype.Component;
@@ -35,6 +36,36 @@ public class CustomerClient {
                 .when()
                 .get("/api/customers/{id}");
 
+    }
+
+    public Response createCustomer(String customerJson) {
+
+        return given()
+                .baseUri(environmentManager.baseUrl())
+                .contentType(ContentType.JSON)
+                .body(customerJson)
+                .when()
+                .post("/api/createcustomer");
+    }
+
+    public Response updateCustomer(int customerId, String customerJson) {
+
+        return given()
+                .baseUri(environmentManager.baseUrl())
+                .pathParam("id", customerId)
+                .contentType(ContentType.JSON)
+                .body(customerJson)
+                .when()
+                .put("/api/customers/{id}");
+    }
+
+    public Response deleteCustomer(int customerId) {
+
+        return given()
+                .baseUri(environmentManager.baseUrl())
+                .pathParam("id", customerId)
+                .when()
+                .delete("/api/customers/{id}");
     }
 
 
