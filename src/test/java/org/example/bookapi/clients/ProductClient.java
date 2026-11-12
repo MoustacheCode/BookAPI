@@ -28,4 +28,16 @@ public class ProductClient {
                 .get("/api/products");
     }
 
+    public Response getProductById(int productId) {
+
+        return given()
+                .baseUri(environmentManager.baseUrl())
+                .pathParam("id", productId)
+                .when()
+                .get("api/products/{id}");
+    }
+
+
+
+
 }
